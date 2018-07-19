@@ -1,0 +1,34 @@
+
+1.What is NoSQL data base?
+
+NoSQL is a class of database management systems (DBMS) that do not follow all of the rules of a relational DBMS and cannot use traditional SQL to query data.
+The term is somewhat misleading when interpreted as "No SQL," and most translate it as "Not Only SQL,"
+as this type of database is not generally a replacement but, rather, a complementary addition to RDBMSs and SQL.
+
+2.How does data get stored in NoSQl database?
+
+In the in-memory databases like Redis/CouchBase/Tarantool/Aerospike everything is stored in RAM in balanced trees like RB-Tree or in hash tables.
+All the writes are applied on both RAM and disk, but on disk it goes in an append-only way.
+In the on-disk NoSQL databases and db-engines like Cassandra/HBase/RocksDB/LevelDB/Sophia the main idea is that you have a snapshot file and a write ahead log (WAL) file. 
+Snapshot contains already prepared data in a form of B-Tree with upper levels of that tree being permanently in RAM, that can be accesses for reading by doing only one disk seek.
+
+3.What is a column family in HBase?
+
+Columns in Apache HBase are grouped into column families. All column members of a column family have the same prefix. 
+For example, the columns courses:history and courses:math are both members of the courses column family. 
+The colon character (:) delimits the column family from the . 
+The column family prefix must be composed of printable characters. 
+The qualifying tail, the column family qualifier, can be made of any arbitrary bytes. 
+Column families must be declared up front at schema definition time whereas columns do not need to be defined at schema time but can be conjured on the fly while the table is up an running.
+
+4.How many maximum number of columns can be added to HBase table?
+
+There is no hard limit to number of columns in HBase ,
+we can have more than 1 million columns but usually three column families are recommended(not more than three).
+
+5.Why columns are not defined at the time of table creation in HBase?
+
+Since flushing memstores to disk causes creation of HFiles, HBase has a .... qualifiers (columns) do not have to be defined at schema definition time.
+
+6.How does data get managed in HBase?
+data is stored in Hbase in table and A subset of the data of each table is handled by each region server. Clients talk to region servers to access data in HBase.
